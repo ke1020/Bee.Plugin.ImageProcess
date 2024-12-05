@@ -2,7 +2,7 @@
 ## GitHub
 
 ```bash
-git push -u github main
+git push -u github master:main
 ```
 
 ## Gitee
