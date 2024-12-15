@@ -1,8 +1,6 @@
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
 
-namespace Bee.Plugin.ImageProcess;
+namespace Bee.Plugin.ImageProcess.Views;
 
 public partial class IndexView : UserControl
 {

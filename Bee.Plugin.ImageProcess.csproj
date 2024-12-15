@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="../Bee/Bee.Base/Bee.Base.csproj" />
+    <ProjectReference Include="C:\Users\ke\dev\proj\libs\Basic\src\ImageProcess\Ke.ImageProcess.ImageSharp\Ke.ImageProcess.ImageSharp.csproj" />
   </ItemGroup>
 
   <Target Name="CopyFilesToDestination" AfterTargets="Build">
@@ -19,10 +20,17 @@
       <FilesToCopy Include="$(OutputPath)**\Bee.Plugin.ImageProcess.dll" />
       <FilesToCopy Include="$(OutputPath)**\Bee.Plugin.ImageProcess.pdb" />
       <FilesToCopy Include="$(OutputPath)**\Bee.Plugin.ImageProcess.deps.json" />
+      <FilesToCopy Include="$(OutputPath)**\Ke.ImageProcess.Abstractions.dll" />
+      <FilesToCopy Include="$(OutputPath)**\Ke.ImageProcess.ImageSharp.dll" />
+      <!--复制插件依赖包 -->
+      <Source3 Include="bin\release\net8.0\publish\SixLabors.ImageSharp.dll" />
+      <Source3 Include="bin\release\net8.0\publish\SixLabors.ImageSharp.Drawing.dll" />
+      <Source3 Include="bin\release\net8.0\publish\SixLabors.Fonts.dll" />
     </ItemGroup>
     <Copy SourceFiles="@(FilesToCopy)" DestinationFolder="$(CopyToDirectory)\%(RecursiveDir)" />
     <Copy SourceFiles="@(Source1)" DestinationFolder="$(CopyToDirectory)\i18n\" />
     <Copy SourceFiles="@(Source2)" DestinationFolder="$(CopyToDirectory)\Configs\" />
+    <Copy SourceFiles="@(Source3)" DestinationFolder="$(CopyToDirectory)\" />
   </Target>
 
 </Project>

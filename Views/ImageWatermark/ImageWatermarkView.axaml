@@ -1,0 +1,121 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:i18n="using:Ke.Bee.Localization.Extensions"
+  xmlns:converter="using:Bee.Base.Converters"
+  mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+  x:Class="Bee.Plugin.ImageProcess.Views.ImageWatermarkView">
+  <UserControl.Resources>
+    <converter:EnumLocalizeConverter x:Key="EnumConverter" />
+  </UserControl.Resources>
+
+  <ScrollViewer VerticalAlignment="Top">
+    <StackPanel>
+      <!-- 输入格式选择 -->
+      <TextBlock Classes="MT-1" Text="{i18n:Localize 'Bee.Plugin.ImageProcess.InputFormat'}" />
+      <ItemsControl ItemsSource="{Binding AvailableInputImageFormats}"
+        DockPanel.Dock="Bottom">
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <WrapPanel />
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <StackPanel Orientation="Horizontal" Margin="5">
+              <CheckBox Content="{Binding Label}"
+                Command="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl},Path=DataContext.InputExtensionsSelectChangeCommand}"
+                IsChecked="{Binding IsSelected}" />
+            </StackPanel>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+
+      <!-- 输出格式选择 -->
+      <TextBlock Classes="MT-1"
+        Text="{i18n:Localize 'Bee.Plugin.ImageProcess.OutputFormat'}" />
+      <ComboBox SelectedValue="{Binding TaskList.TaskArguments.OutputFormat, Mode=TwoWay}"
+        HorizontalAlignment="Stretch" ItemsSource="{Binding OutputFormats}" />
+
+      <!-- 水印模式选择 -->
+      <TextBlock Classes="MT-1"
+        Text="{i18n:Localize 'Bee.Plugin.ImageProcess.WatermarkMode'}" />
+      <ComboBox
+        PlaceholderText="{i18n:Localize 'Bee.Plugin.ImageProcess.WatermarkMode.Placeholder'}"
+        SelectedValue="{Binding TaskList.TaskArguments.WatermarkMode, Mode=TwoWay}"
+        HorizontalAlignment="Stretch" ItemsSource="{Binding WatermarkModes}"
+        SelectionChanged="WatermarkMode_SelectionChanged">
+        <ComboBox.ItemTemplate>
+          <DataTemplate>
+            <TextBlock
+              Text="{Binding, Converter={StaticResource EnumConverter}, ConverterParameter='Bee.Plugin.ImageProcess.WatermarkMode'}" />
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
+
+      <!-- 图片水印设置 -->
+      <StackPanel IsVisible="{Binding IsWatermarkImageMode}">
+        <TextBlock Classes="MT-1"
+          Text="{i18n:Localize 'Bee.Plugin.ImageProcess.Watermark.Image'}" />
+        <TextBox IsReadOnly="True" Text="{Binding TaskList.TaskArguments.WatermarkImage, Mode=TwoWay}" GotFocus="WatermarkImage_GotFocus" />
+      </StackPanel>
+
+      <!-- 文本水印设置 -->
+      <StackPanel IsVisible="{Binding !IsWatermarkImageMode}">
+        <!-- 文本 -->
+        <TextBlock Classes="MT-1"
+          Text="{i18n:Localize 'Bee.Plugin.ImageProcess.Watermark.Text'}" />
+        <TextBox Text="{Binding TaskList.TaskArguments.WatermarkText, Mode=TwoWay}"
+          Watermark="{i18n:Localize 'Bee.Plugin.ImageProcess.Watermark.Placeholder'}" />
+        <!--文字大小-->
+        <TextBlock Classes="MT-1"
+          Text="{i18n:Localize 'Bee.Plugin.ImageProcess.Watermark.FontSize', {Binding #fontsize.Value}}" />
+        <Slider x:Name="fontsize" Minimum="1" Maximum="100" IsSnapToTickEnabled="True"
+          TickFrequency="1"
+          Value="{Binding TaskList.TaskArguments.FontSize, Mode=TwoWay}" />
+      </StackPanel>
+
+      <!-- 水印位置选择 -->
+      <TextBlock Classes="MT-1"
+        Text="{i18n:Localize 'Bee.Plugin.ImageProcess.WatermarkPosition'}" />
+      <ComboBox
+        PlaceholderText="{i18n:Localize 'Bee.Plugin.ImageProcess.WatermarkPosition.Placeholder'}"
+        SelectedValue="{Binding TaskList.TaskArguments.WatermarkPosition, Mode=TwoWay}"
+        HorizontalAlignment="Stretch" ItemsSource="{Binding WatermarkPositions}">
+        <ComboBox.ItemTemplate>
+          <DataTemplate>
+            <TextBlock
+              Text="{Binding, Converter={StaticResource EnumConverter}, ConverterParameter='Bee.Plugin.ImageProcess.WatermarkPosition'}" />
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
+
+      <!-- 平铺 -->
+      <TextBlock Classes="MT-1"
+        Text="{i18n:Localize 'Bee.Plugin.ImageProcess.Watermark.IsTile'}" />
+      <CheckBox Content="{i18n:Localize 'Bee.Plugin.ImageProcess.Watermark.TileLabel'}"
+        IsChecked="{Binding TaskList.TaskArguments.IsTile, Mode=TwoWay}" />
+
+      <!--旋转角度-->
+      <TextBlock Classes="MT-1"
+        Text="{i18n:Localize 'Bee.Plugin.ImageProcess.Rotation', {Binding #rotation.Value}}" />
+      <Slider x:Name="rotation" Minimum="0" Maximum="360" IsSnapToTickEnabled="True"
+        TickFrequency="1"
+        Value="{Binding TaskList.TaskArguments.Rotation, Mode=TwoWay}" />
+
+      <!--透明度-->
+      <TextBlock Classes="MT-1"
+        Text="{i18n:Localize 'Bee.Plugin.ImageProcess.Opacity', {Binding #opacity.Value}}" />
+      <Slider x:Name="opacity" Minimum="1" Maximum="100" IsSnapToTickEnabled="True"
+        TickFrequency="1"
+        Value="{Binding TaskList.TaskArguments.Opacity, Mode=TwoWay}" />
+
+      <!--输出质量-->
+      <TextBlock Classes="MT-1"
+        Text="{i18n:Localize 'Bee.Plugin.ImageProcess.OutputQuality', {Binding #slider.Value}}" />
+      <Slider x:Name="slider" Minimum="1" Maximum="100" IsSnapToTickEnabled="True" TickFrequency="1"
+        Value="{Binding TaskList.TaskArguments.Quality, Mode=TwoWay}" />
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

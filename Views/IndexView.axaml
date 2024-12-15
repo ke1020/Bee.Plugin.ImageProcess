@@ -1,0 +1,31 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:i18n="using:Ke.Bee.Localization.Extensions"
+  xmlns:ctrl="using:Bee.Base.Controls"
+  xmlns:uc="using:Bee.Plugin.ImageProcess.Views"
+  mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+  x:Class="Bee.Plugin.ImageProcess.Views.IndexView">
+  <!-- 工作区 -->
+  <ctrl:Workspace Title="{i18n:Localize 'Bee.Plugin.ImageProcess.ImageConvertTitle'}"
+    IsPaneOpen="{Binding IsPaneOpen}" PaneToggleCommand="{Binding PaneToggleCommand}">
+    <!-- 任务列表 -->
+    <ctrl:Workspace.Content>
+      <ctrl:TaskList DataContext="{Binding SelectedTab.DataContext.TaskList}" />
+    </ctrl:Workspace.Content>
+    <!-- 参数面板 -->
+    <ctrl:Workspace.Pane>
+      <Border IsVisible="{Binding IsPaneOpen}" BorderThickness="1,0,0,0"
+        BorderBrush="{DynamicResource BorderColor}">
+        <TabControl Classes="Arguments" ItemsSource="{Binding Tabs}" SelectedItem="{Binding SelectedTab}">
+          <TabControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <UniformGrid Rows="1" />
+            </ItemsPanelTemplate>
+          </TabControl.ItemsPanel>
+        </TabControl>
+      </Border>
+    </ctrl:Workspace.Pane>
+  </ctrl:Workspace>
+</UserControl>

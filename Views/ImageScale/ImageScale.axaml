@@ -1,0 +1,86 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:i18n="using:Ke.Bee.Localization.Extensions"
+  xmlns:converter="using:Bee.Base.Converters"
+  mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+  x:Class="Bee.Plugin.ImageProcess.Views.ImageScaleView">
+  <UserControl.Resources>
+    <converter:EnumLocalizeConverter x:Key="EnumConverter" />
+    <converter:StringToUIntConverter x:Key="UIntConverter" />
+  </UserControl.Resources>
+
+  <StackPanel>
+    <!-- 输入格式选择 -->
+    <TextBlock Margin="0 5" Text="{i18n:Localize 'Bee.Plugin.ImageProcess.InputFormat'}" />
+    <ItemsControl ItemsSource="{Binding AvailableInputImageFormats}"
+      DockPanel.Dock="Bottom">
+      <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate>
+          <WrapPanel />
+        </ItemsPanelTemplate>
+      </ItemsControl.ItemsPanel>
+      <ItemsControl.ItemTemplate>
+        <DataTemplate>
+          <StackPanel Orientation="Horizontal" Margin="5">
+            <CheckBox Content="{Binding Label}"
+              Command="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl},Path=DataContext.InputExtensionsSelectChangeCommand}"
+              IsChecked="{Binding IsSelected}" />
+          </StackPanel>
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+
+    <!-- 输出格式选择 -->
+    <TextBlock Margin="0 5"
+      Text="{i18n:Localize 'Bee.Plugin.ImageProcess.OutputFormat'}" />
+    <ComboBox SelectedValue="{Binding TaskList.TaskArguments.OutputFormat, Mode=TwoWay}"
+      HorizontalAlignment="Stretch" ItemsSource="{Binding OutputFormats}" Margin="0,0,0,20" />
+
+    <!-- 缩放模式 -->
+    <TextBlock Margin="0 5"
+      Text="{i18n:Localize 'Bee.Plugin.ImageProcess.ScaleMode'}" />
+    <ComboBox
+      PlaceholderText="{i18n:Localize 'Bee.Plugin.ImageProcess.ScaleMode.Placeholder'}"
+      SelectedValue="{Binding TaskList.TaskArguments.ScaleMode, Mode=TwoWay}"
+      HorizontalAlignment="Stretch" ItemsSource="{Binding ScaleModes}"
+      Margin="0,0,0,20">
+      <ComboBox.ItemTemplate>
+        <DataTemplate>
+          <TextBlock
+            Text="{Binding, Converter={StaticResource EnumConverter}, ConverterParameter='Bee.Plugin.ImageProcess.ScaleMode'}" />
+        </DataTemplate>
+      </ComboBox.ItemTemplate>
+    </ComboBox>
+
+    <!--输出尺寸-->
+    <TextBlock
+      Text="{i18n:Localize 'Bee.Plugin.ImageProcess.OutputSize'}" />
+    <Grid Margin="0 10">
+      <!-- 定义三列 -->
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" /> <!-- 第一列用于 "宽" 和第一个 TextBox -->
+        <ColumnDefinition Width="20" /> <!-- 第二列用于 "x" -->
+        <ColumnDefinition Width="Auto" />    <!-- 第三列用于 "高" 和第二个 TextBox -->
+      </Grid.ColumnDefinitions>
+
+      <!-- 第1行：TextBox -->
+      <TextBox Grid.Column="0" Grid.Row="0" Width="70" Margin="0"
+        Text="{Binding TaskList.TaskArguments.Width, Mode=TwoWay, Converter={StaticResource UIntConverter}}"
+        Watermark="{i18n:Localize 'Bee.Plugin.ImageProcess.Width'}" />
+      <TextBlock Text="x" Grid.Column="1" Grid.Row="0" Margin="5" VerticalAlignment="Center"
+        HorizontalAlignment="Center" />
+      <TextBox Grid.Column="2" Grid.Row="0" Width="70" Margin="0"
+        Text="{Binding TaskList.TaskArguments.Height, Mode=TwoWay, Converter={StaticResource UIntConverter}}"
+        Watermark="{i18n:Localize 'Bee.Plugin.ImageProcess.Height'}" />
+    </Grid>
+
+    <!--输出质量-->
+    <TextBlock
+      Text="{i18n:Localize 'Bee.Plugin.ImageProcess.OutputQuality', {Binding #slider.Value}}" />
+    <Slider x:Name="slider" Minimum="1" Maximum="100" IsSnapToTickEnabled="True" TickFrequency="1"
+      Value="{Binding TaskList.TaskArguments.Quality, Mode=TwoWay}" />
+
+  </StackPanel>
+</UserControl>

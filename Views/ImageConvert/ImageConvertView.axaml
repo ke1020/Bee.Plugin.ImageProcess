@@ -1,0 +1,39 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:i18n="using:Ke.Bee.Localization.Extensions"
+  mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+  x:Class="Bee.Plugin.ImageProcess.Views.ImageConvertView">
+  <StackPanel>
+    <!-- 输入格式选择 -->
+    <TextBlock Margin="0 5" Text="{i18n:Localize 'Bee.Plugin.ImageProcess.InputFormat'}" />
+    <ItemsControl ItemsSource="{Binding AvailableInputImageFormats}"
+      DockPanel.Dock="Bottom">
+      <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate>
+          <WrapPanel />
+        </ItemsPanelTemplate>
+      </ItemsControl.ItemsPanel>
+      <ItemsControl.ItemTemplate>
+        <DataTemplate>
+          <StackPanel Orientation="Horizontal" Margin="5">
+            <CheckBox Content="{Binding Label}"
+              Command="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl},Path=DataContext.InputExtensionsSelectChangeCommand}"
+              IsChecked="{Binding IsSelected}" />
+          </StackPanel>
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+
+    <!-- 输出格式选择 -->
+    <TextBlock Margin="0 5"
+      Text="{i18n:Localize 'Bee.Plugin.ImageProcess.OutputFormat'}" />
+    <ComboBox SelectedValue="{Binding TaskList.TaskArguments.OutputFormat, Mode=TwoWay}"
+      HorizontalAlignment="Stretch" ItemsSource="{Binding OutputFormats}" Margin="0,0,0,20" />
+
+    <!--输出质量-->
+    <TextBlock Text="{i18n:Localize 'Bee.Plugin.ImageProcess.OutputQuality', {Binding #slider.Value}}" />
+    <Slider x:Name="slider" Minimum="1" Maximum="100" IsSnapToTickEnabled="True" TickFrequency="1" Value="{Binding TaskList.TaskArguments.Quality, Mode=TwoWay}" />
+  </StackPanel>
+</UserControl>
