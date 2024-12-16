@@ -7,13 +7,15 @@
   xmlns:uc="using:Bee.Plugin.ImageProcess.Views"
   mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
   x:Class="Bee.Plugin.ImageProcess.Views.IndexView">
-  <!-- 工作区 -->
+  
   <ctrl:Workspace Title="{i18n:Localize 'Bee.Plugin.ImageProcess.ImageConvertTitle'}"
     IsPaneOpen="{Binding IsPaneOpen}" PaneToggleCommand="{Binding PaneToggleCommand}">
-    <!-- 任务列表 -->
+    
+    <!-- 主工作区 -->
     <ctrl:Workspace.Content>
       <ctrl:TaskList DataContext="{Binding SelectedTab.DataContext.TaskList}" />
     </ctrl:Workspace.Content>
+
     <!-- 参数面板 -->
     <ctrl:Workspace.Pane>
       <Border IsVisible="{Binding IsPaneOpen}" BorderThickness="1,0,0,0"
@@ -28,4 +30,5 @@
       </Border>
     </ctrl:Workspace.Pane>
   </ctrl:Workspace>
+
 </UserControl>
