@@ -8,6 +8,12 @@ namespace Bee.Plugin.ImageProcess.Models;
 /// </summary>
 public class ImageProcessArgumentBase : TaskArgumentBase
 {
+    /// <summary>
+    /// 输出图片格式
+    /// </summary>
     public string OutputFormat { get; set; } = ImageProcessConsts.DefaultOutputFormat;
+    /// <summary>
+    /// 输出质量
+    /// </summary>
     public uint Quality { get; set; } = 90;
 }
