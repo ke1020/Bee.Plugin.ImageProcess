@@ -1,6 +1,7 @@
 using Bee.Base.ViewModels;
 using Bee.Plugin.ImageProcess.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Ke.Bee.Localization.Localizer.Abstractions;
 using Ke.ImageProcess.Models.Watermark;
 
 namespace Bee.Plugin.ImageProcess.ViewModels;
@@ -27,7 +28,7 @@ public partial class ImageWatermarkViewModel : ImageProcessBaseViewModel<ImageWa
     [ObservableProperty]
     private bool _isWatermarkImageMode;
 
-    public ImageWatermarkViewModel(TaskListViewModel<ImageWatermarkArguments> taskList) : base(taskList)
+    public ImageWatermarkViewModel(TaskListViewModel<ImageWatermarkArguments> taskList, ILocalizer l) : base(taskList, l)
     {
         IsWatermarkImageMode = TaskList.TaskArguments?.WatermarkMode == WatermarkMode.Image;
     }

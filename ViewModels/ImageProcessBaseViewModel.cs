@@ -5,6 +5,7 @@ using Bee.Base.Models.Tasks;
 using Bee.Base.ViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Ke.Bee.Localization.Localizer.Abstractions;
 
 namespace Bee.Plugin.ImageProcess.ViewModels;
 
@@ -32,13 +33,15 @@ public partial class ImageProcessBaseViewModel<T> : ObservableObject where T : T
     /// </summary>
     public ITaskListViewModel<T> TaskList { get; }
 
-    public ImageProcessBaseViewModel(TaskListViewModel<T> taskList)
+    public ImageProcessBaseViewModel(TaskListViewModel<T> taskList, ILocalizer l)
     {
         TaskList = taskList;
         // 初始化任务参数
         TaskList.InitialArguments(ImageProcessConsts.PluginName);
         // 设置任务列表初始可选择的文件类型
         TaskList.SetInputExtensions(ImageProcessConsts.AvailableImageFormats);
+        // 设置视图功能说明
+        TaskList.SetViewComment(l["Bee.Plugin.ImageProcess.ViewComment"]);
     }
 
     /// <summary>

@@ -1,22 +1,26 @@
 using Avalonia.Controls;
+using Bee.Base.Models;
 using Bee.Base.ViewModels;
 using Bee.Plugin.ImageProcess.Views;
 using Ke.Bee.Localization.Localizer.Abstractions;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Bee.Plugin.ImageProcess.ViewModels;
 
 public partial class IndexViewModel : WorkspaceViewModel
 {
-    private static readonly string[] _tabLocalHeaders = [
-        "Bee.Plugin.ImageProcess.Convert",
-        "Bee.Plugin.ImageProcess.Scale",
-        "Bee.Plugin.ImageProcess.Watermark"
+    private readonly List<TabMetadata> _tabs =
+    [
+        new ("Bee.Plugin.ImageProcess.Convert", typeof(ImageConvertView), typeof(ImageConvertViewModel)),
+        new ("Bee.Plugin.ImageProcess.Scale", typeof(ImageScaleView), typeof(ImageScaleViewModel)),
+        new ("Bee.Plugin.ImageProcess.Watermark", typeof(ImageWatermarkView), typeof(ImageWatermarkViewModel))
     ];
+
     /// <summary>
     /// 标签页
     /// </summary>
-    public List<TabItem> Tabs => _tabLocalHeaders.Select((x, i) => new TabItem { TabIndex = i, Header = _l[x] }).ToList();
+    public List<TabItem> Tabs => _tabs.Select((x, i) => new TabItem { TabIndex = i, Header = _l[x.LocalKey] }).ToList();
+
+    private int _selectedTabIndex = 0;
 
     private TabItem? _selectedTab;
     /// <summary>
@@ -24,35 +28,15 @@ public partial class IndexViewModel : WorkspaceViewModel
     /// </summary>
     public TabItem SelectedTab
     {
-        get => _selectedTab ?? Tabs[0];
+        get => _selectedTab ?? Tabs[_selectedTabIndex];
         set
         {
-            switch (value.TabIndex)
-            {
-                case 0:
-                    _imageConvertV ??= _serviceProvider.GetService<ImageConvertViewModel>()!;
-                    value.DataContext = _imageConvertV;
-                    value.Content = new ImageConvertView { DataContext = _imageConvertV };
-                    break;
-                case 1:
-                    _imageScaleV ??= _serviceProvider.GetService<ImageScaleViewModel>()!;
-                    value.DataContext = _imageScaleV;
-                    value.Content = new ImageScaleView { DataContext = _imageScaleV };
-                    break;
-                case 2:
-                    _imageWatermarkV ??= _serviceProvider.GetService<ImageWatermarkViewModel>()!;
-                    value.DataContext = _imageWatermarkV;
-                    value.Content = new ImageWatermarkView { DataContext = _imageWatermarkV };
-                    break;
-            }
+            InitialTab(value, _tabs[value.TabIndex]);
             SetProperty(ref _selectedTab, value);
         }
     }
 
     private readonly IServiceProvider _serviceProvider;
-    private ImageConvertViewModel? _imageConvertV;
-    private ImageWatermarkViewModel? _imageWatermarkV;
-    private ImageScaleViewModel? _imageScaleV;
     private readonly ILocalizer _l;
 
     public IndexViewModel(IServiceProvider serviceProvider, ILocalizer l)
@@ -60,6 +44,19 @@ public partial class IndexViewModel : WorkspaceViewModel
         _serviceProvider = serviceProvider;
         _l = l;
         IsPaneOpen = true;
-        SelectedTab = Tabs[0];
+    }
+
+    /// <summary>
+    /// 初始化标签页
+    /// </summary>
+    /// <param name="tabItem">标签对象</param>
+    /// <param name="tabMetadata">标签元数据信息</param>
+    private void InitialTab(TabItem tabItem, TabMetadata tabMetadata)
+    {
+        var view = _serviceProvider.GetService(tabMetadata.ViewType) as UserControl;
+        var vm = _serviceProvider.GetService(tabMetadata.ViewModelType);
+        tabItem.DataContext = vm;
+        view!.DataContext = vm;
+        tabItem.Content = view;
     }
 }
