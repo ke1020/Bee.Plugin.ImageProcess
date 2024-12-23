@@ -6,11 +6,14 @@
     <Nullable>enable</Nullable>
     <LangVersion>12.0</LangVersion>
     <CopyToDirectory>C:\Users\ke\dev\proj\avalonia\Bee\Bee\Plugins\ImageProcess</CopyToDirectory>
+    <!-- 禁用所有默认分析器 -->
+    <AnalysisModeRoslynDiagnosticsDesign>AllDisabledByDefault</AnalysisModeRoslynDiagnosticsDesign>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="../Bee/Bee.Base/Bee.Base.csproj" />
-    <ProjectReference Include="C:\Users\ke\dev\proj\libs\Basic\src\ImageProcess\Ke.ImageProcess.ImageSharp\Ke.ImageProcess.ImageSharp.csproj" />
+    <ProjectReference
+      Include="C:\Users\ke\dev\proj\libs\Basic\src\ImageProcess\Ke.ImageProcess.ImageSharp\Ke.ImageProcess.ImageSharp.csproj" />
   </ItemGroup>
 
   <Target Name="CopyFilesToDestination" AfterTargets="Build">
@@ -32,5 +35,14 @@
     <Copy SourceFiles="@(Source2)" DestinationFolder="$(CopyToDirectory)\Configs\" />
     <Copy SourceFiles="@(Source3)" DestinationFolder="$(CopyToDirectory)\" />
   </Target>
+
+  <ItemGroup>
+    <!-- 不应隐式捕获主构造函数参数检测 -->
+    <PackageReference Include="Roslyn.Diagnostics.Analyzers"
+      Version="3.11.0-beta1.24527.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
 
 </Project>

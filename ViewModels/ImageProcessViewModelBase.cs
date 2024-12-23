@@ -9,7 +9,7 @@ using Ke.Bee.Localization.Localizer.Abstractions;
 
 namespace Bee.Plugin.ImageProcess.ViewModels;
 
-public partial class ImageProcessBaseViewModel<T> : ObservableObject where T : TaskArgumentBase, new()
+public partial class ImageProcessViewModelBase<T> : ObservableObject where T : TaskArgumentBase, new()
 {
     /// <summary>
     /// 输出质量
@@ -33,7 +33,7 @@ public partial class ImageProcessBaseViewModel<T> : ObservableObject where T : T
     /// </summary>
     public ITaskListViewModel<T> TaskList { get; }
 
-    public ImageProcessBaseViewModel(TaskListViewModel<T> taskList, ILocalizer l)
+    public ImageProcessViewModelBase(TaskListViewModel<T> taskList, ILocalizer l)
     {
         TaskList = taskList;
         // 初始化任务参数
@@ -41,7 +41,7 @@ public partial class ImageProcessBaseViewModel<T> : ObservableObject where T : T
         // 设置任务列表初始可选择的文件类型
         TaskList.SetInputExtensions(ImageProcessConsts.AvailableImageFormats);
         // 设置视图功能说明
-        TaskList.SetViewComment(l["Bee.Plugin.ImageProcess.ViewComment"]);
+        //TaskList.SetViewComment(l["Bee.Plugin.ImageProcess.ViewComment"]);
     }
 
     /// <summary>

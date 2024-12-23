@@ -7,10 +7,10 @@
   xmlns:uc="using:Bee.Plugin.ImageProcess.Views"
   mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
   x:Class="Bee.Plugin.ImageProcess.Views.IndexView">
-  
+
   <ctrl:Workspace Title="{i18n:Localize 'Bee.Plugin.ImageProcess.ImageConvertTitle'}"
     IsPaneOpen="{Binding IsPaneOpen}" PaneToggleCommand="{Binding PaneToggleCommand}">
-    
+
     <!-- 主工作区 -->
     <ctrl:Workspace.Content>
       <ctrl:TaskList DataContext="{Binding SelectedTab.DataContext.TaskList}" />
@@ -20,7 +20,8 @@
     <ctrl:Workspace.Pane>
       <Border IsVisible="{Binding IsPaneOpen}" BorderThickness="1,0,0,0"
         BorderBrush="{DynamicResource BorderColor}">
-        <TabControl Classes="Arguments" ItemsSource="{Binding Tabs}" SelectedItem="{Binding SelectedTab}">
+        <TabControl Classes="Arguments" ItemsSource="{Binding Tabs}"
+          SelectedItem="{Binding SelectedTab}">
           <TabControl.ItemsPanel>
             <ItemsPanelTemplate>
               <UniformGrid Rows="1" />

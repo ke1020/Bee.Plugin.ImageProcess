@@ -48,7 +48,10 @@ public class ImageWatermarkTaskHandler(IImageWatermarker imageWatermarker) : ITa
         }
     };
 
-    public async Task<bool> ExecuteAsync(TaskItem taskItem, ImageWatermarkArguments? argments, Action<double> progressCallback)
+    public async Task<bool> ExecuteAsync(TaskItem taskItem, 
+        ImageWatermarkArguments? argments, 
+        Action<double> progressCallback,
+        CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(argments);
 

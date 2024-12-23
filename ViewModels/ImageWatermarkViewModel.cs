@@ -6,7 +6,7 @@ using Ke.ImageProcess.Models.Watermark;
 
 namespace Bee.Plugin.ImageProcess.ViewModels;
 
-public partial class ImageWatermarkViewModel : ImageProcessBaseViewModel<ImageWatermarkArguments>
+public partial class ImageWatermarkViewModel : ImageProcessViewModelBase<ImageWatermarkArguments>
 {
     /// <summary>
     /// 绑定到 ComboBox 的水印模式集合

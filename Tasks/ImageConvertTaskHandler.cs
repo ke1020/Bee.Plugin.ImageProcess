@@ -15,7 +15,10 @@ public class ImageConvertTaskHandler(IImageConverter imageConverter) : ITaskHand
 {
     private readonly IImageConverter _imageConverter = imageConverter;
 
-    public async Task<bool> ExecuteAsync(TaskItem taskItem, ImageConvertArguments? argments, Action<double> progressCallback)
+    public async Task<bool> ExecuteAsync(TaskItem taskItem, 
+        ImageConvertArguments? argments, 
+        Action<double> progressCallback, 
+        CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(argments);
 

@@ -20,7 +20,10 @@ public class ImageScaleTaskHandler : ITaskHandler<ImageScaleArguments>
         _scaler = imageScaler;
     }
 
-    public async Task<bool> ExecuteAsync(TaskItem taskItem, ImageScaleArguments? args, Action<double> progressCallback)
+    public async Task<bool> ExecuteAsync(TaskItem taskItem, 
+        ImageScaleArguments? args, 
+        Action<double> progressCallback,
+        CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(args);
         
