@@ -13,7 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="../Bee/Bee.Base/Bee.Base.csproj" />
     <ProjectReference
-      Include="C:\Users\ke\dev\proj\libs\Basic\src\ImageProcess\Ke.ImageProcess.ImageSharp\Ke.ImageProcess.ImageSharp.csproj" />
+      Include="C:\Users\ke\dev\proj\libs\ImageProcess\Ke.ImageProcess.ImageSharp\Ke.ImageProcess.ImageSharp.csproj" />
   </ItemGroup>
 
   <Target Name="CopyFilesToDestination" AfterTargets="Build">

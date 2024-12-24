@@ -1,0 +1,56 @@
+using System.Collections.ObjectModel;
+
+using Bee.Base.Models;
+using Bee.Base.ViewModels;
+using Bee.Plugin.ImageProcess.Models;
+
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+
+namespace Bee.Plugin.ImageProcess.ViewModels;
+
+public partial class IndexViewModel : WorkspaceViewModel
+{
+    private static readonly string[] AvailableImageFormats = ["jpg", "png", "bmp", "webp", "gif"];
+    /// <summary>
+    /// 输出质量
+    /// </summary>
+    [ObservableProperty]
+    private uint _quality = 90;
+    /// <summary>
+    /// 输出格式集合
+    /// </summary>
+    public List<string> OutputFormats => [.. AvailableImageFormats];
+    /// <summary>
+    /// 可选的输入图片格式集合
+    /// </summary>
+    [ObservableProperty]
+    private ObservableCollection<SelectableItem> _availableInputImageFormats = [.. AvailableImageFormats
+        .Select(x => new SelectableItem { Label = x, IsSelected = true })]
+        ;
+    /// <summary>
+    /// 任务列表控件视图模型
+    /// </summary>
+    public TaskListViewModel<ImageConvertArguments> TaskList { get; }
+
+    public IndexViewModel(TaskListViewModel<ImageConvertArguments> taskList)
+    {
+        // 默认展开参数面板
+        IsPaneOpen = true;
+        // 将注入的视图模型赋值给 TaskList 属性
+        TaskList = taskList;
+        // 调用任务列表的 InitialArguments 方法
+        TaskList.InitialArguments(ImageProcessConsts.PluginName);
+        // 设置任务列表初始可选择的文件类型
+        TaskList.SetInputExtensions(AvailableImageFormats);
+    }
+
+    /// <summary>
+    /// 筛选文件类型改变事件
+    /// </summary>
+    [RelayCommand]
+    private void InputExtensionsSelectChange()
+    {
+        TaskList.SetInputExtensions(AvailableInputImageFormats.Where(x => x.IsSelected == true).Select(x => x.Label));
+    }
+}

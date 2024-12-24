@@ -82,5 +82,11 @@
     <Slider x:Name="slider" Minimum="1" Maximum="100" IsSnapToTickEnabled="True" TickFrequency="1"
       Value="{Binding TaskList.TaskArguments.Quality, Mode=TwoWay}" />
 
+    <!--并发数-->
+    <TextBlock
+      Text="{i18n:Localize 'Task.MaxDegreeOfParallelism.Label', {Binding #MaxDegree.Value}}" />
+    <Slider x:Name="MaxDegree" Minimum="1" Maximum="32" IsSnapToTickEnabled="True" TickFrequency="1"
+      Value="{Binding TaskList.TaskArguments.MaxDegreeOfParallelism, Mode=TwoWay}" />
+
   </StackPanel>
 </UserControl>

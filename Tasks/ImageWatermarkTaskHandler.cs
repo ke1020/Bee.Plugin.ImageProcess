@@ -1,4 +1,3 @@
-using System.Text.Json;
 using Bee.Base.Abstractions.Tasks;
 using Bee.Base.Models.Tasks;
 using Bee.Plugin.ImageProcess.Models;
@@ -53,6 +52,7 @@ public class ImageWatermarkTaskHandler(IImageWatermarker imageWatermarker) : ITa
         Action<double> progressCallback,
         CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         ArgumentNullException.ThrowIfNull(argments);
 
         if (!_watermarkModes.TryGetValue(argments.WatermarkMode, out var callWatermark))

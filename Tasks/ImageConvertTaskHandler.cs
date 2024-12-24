@@ -20,6 +20,7 @@ public class ImageConvertTaskHandler(IImageConverter imageConverter) : ITaskHand
         Action<double> progressCallback, 
         CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         ArgumentNullException.ThrowIfNull(argments);
 
         // 监听转换完成事件
@@ -34,7 +35,7 @@ public class ImageConvertTaskHandler(IImageConverter imageConverter) : ITaskHand
         };
 
         // 执行转换
-        await _imageConverter.ConvertAsync(req);
+        await _imageConverter.ConvertAsync(req, cancellationToken);
 
         return true;
     }

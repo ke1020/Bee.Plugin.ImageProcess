@@ -13,7 +13,7 @@
 
     <!-- 主工作区 -->
     <ctrl:Workspace.Content>
-      <ctrl:TaskList DataContext="{Binding SelectedTab.DataContext.TaskList}" />
+      <ctrl:TaskList DataContext="{Binding SelectedTab.DataContext.TaskList}" ViewComment="{i18n:Localize 'Bee.Plugin.ImageProcess.ViewComment'}" />
     </ctrl:Workspace.Content>
 
     <!-- 参数面板 -->

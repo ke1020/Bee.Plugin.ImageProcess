@@ -25,6 +25,7 @@ public class ImageScaleTaskHandler : ITaskHandler<ImageScaleArguments>
         Action<double> progressCallback,
         CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         ArgumentNullException.ThrowIfNull(args);
         
         _scaler.OnScaled += (sender, args) =>
