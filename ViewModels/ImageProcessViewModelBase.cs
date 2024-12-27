@@ -40,8 +40,6 @@ public partial class ImageProcessViewModelBase<T> : ObservableObject where T : T
         TaskList.InitialArguments(ImageProcessConsts.PluginName);
         // 设置任务列表初始可选择的文件类型
         TaskList.SetInputExtensions(ImageProcessConsts.AvailableImageFormats);
-        // 设置视图功能说明
-        //TaskList.SetViewComment(l["Bee.Plugin.ImageProcess.ViewComment"]);
     }
 
     /// <summary>
