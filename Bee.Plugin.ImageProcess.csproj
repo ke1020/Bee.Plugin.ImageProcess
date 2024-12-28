@@ -25,15 +25,18 @@
       <FilesToCopy Include="$(OutputPath)**\Bee.Plugin.ImageProcess.deps.json" />
       <FilesToCopy Include="$(OutputPath)**\Ke.ImageProcess.Abstractions.dll" />
       <FilesToCopy Include="$(OutputPath)**\Ke.ImageProcess.ImageSharp.dll" />
-      <!--复制插件依赖包 -->
+      <!-- 复制插件依赖包 (修改)
       <Source3 Include="bin\release\net8.0\publish\SixLabors.ImageSharp.dll" />
       <Source3 Include="bin\release\net8.0\publish\SixLabors.ImageSharp.Drawing.dll" />
       <Source3 Include="bin\release\net8.0\publish\SixLabors.Fonts.dll" />
+       -->
     </ItemGroup>
     <Copy SourceFiles="@(FilesToCopy)" DestinationFolder="$(CopyToDirectory)\%(RecursiveDir)" />
     <Copy SourceFiles="@(Source1)" DestinationFolder="$(CopyToDirectory)\i18n\" />
     <Copy SourceFiles="@(Source2)" DestinationFolder="$(CopyToDirectory)\Configs\" />
+    <!--
     <Copy SourceFiles="@(Source3)" DestinationFolder="$(CopyToDirectory)\" />
+    -->
   </Target>
 
   <ItemGroup>

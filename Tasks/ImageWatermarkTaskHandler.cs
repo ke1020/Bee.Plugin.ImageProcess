@@ -1,16 +1,22 @@
+using Bee.Base.Abstractions;
 using Bee.Base.Abstractions.Tasks;
+using Bee.Base.Models;
 using Bee.Base.Models.Tasks;
 using Bee.Plugin.ImageProcess.Models;
+
 using Ke.ImageProcess.Abstractions;
 using Ke.ImageProcess.Models;
 using Ke.ImageProcess.Models.Watermark;
+
+using Microsoft.Extensions.Options;
 
 namespace Bee.Plugin.ImageProcess.Tasks;
 
 /// <summary>
 /// 图片水印任务处理器
 /// </summary>
-public class ImageWatermarkTaskHandler(IImageWatermarker imageWatermarker) : ITaskHandler<ImageWatermarkArguments>
+public class ImageWatermarkTaskHandler(IImageWatermarker imageWatermarker, ICoverHandler coverHandler) :
+    TaskHandlerBase<ImageWatermarkArguments>(coverHandler)
 {
     private readonly IImageWatermarker _imageWatermarker = imageWatermarker;
 
@@ -24,7 +30,7 @@ public class ImageWatermarkTaskHandler(IImageWatermarker imageWatermarker) : ITa
                 {
                     throw new WatermarkImageNotExistsException();
                 }
-                
+
                 return new ImageWatermark(args.WatermarkImage);
             }
         },
@@ -47,8 +53,8 @@ public class ImageWatermarkTaskHandler(IImageWatermarker imageWatermarker) : ITa
         }
     };
 
-    public async Task<bool> ExecuteAsync(TaskItem taskItem, 
-        ImageWatermarkArguments? argments, 
+    public override async Task<bool> ExecuteAsync(TaskItem taskItem,
+        ImageWatermarkArguments? argments,
         Action<double> progressCallback,
         CancellationToken cancellationToken = default)
     {
@@ -62,13 +68,10 @@ public class ImageWatermarkTaskHandler(IImageWatermarker imageWatermarker) : ITa
 
         var w = callWatermark(argments);
 
-        _imageWatermarker.OnWatermarked += (sender, e) =>
-        {
-            progressCallback(100);
-        };
+        _imageWatermarker.OnWatermarked += (sender, e) => progressCallback(100);
 
         var options = new ImageWatermarkRequest<WatermarkBase>(
-            [taskItem.FileName],
+            [taskItem.Input],
             argments.OutputDirectory,
             argments.OutputFormat)
         {

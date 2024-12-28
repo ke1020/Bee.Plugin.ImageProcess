@@ -45,7 +45,6 @@ public class ImageProcessPlugin(IServiceProvider serviceProvider) : PluginBase(s
         services.AddImageSharp();
 
         // 注入任务处理相关服务
-        services.AddTransient<ITaskCoverHandler, TaskCoverHandler>();
         services.AddTransient<ITaskHandler<ImageWatermarkArguments>, ImageWatermarkTaskHandler>();
         services.AddTransient<ITaskHandler<ImageConvertArguments>, ImageConvertTaskHandler>();
         services.AddTransient<ITaskHandler<ImageScaleArguments>, ImageScaleTaskHandler>();
