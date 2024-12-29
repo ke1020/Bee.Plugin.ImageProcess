@@ -1,6 +1,7 @@
 using Bee.Base.Abstractions;
 using Bee.Base.Abstractions.Tasks;
 using Bee.Base.Models;
+using Bee.Base.Models.Plugin;
 using Bee.Base.Models.Tasks;
 using Bee.Plugin.ImageProcess.Models;
 
@@ -53,7 +54,7 @@ public class ImageWatermarkTaskHandler(IImageWatermarker imageWatermarker, ICove
         }
     };
 
-    public override async Task<bool> ExecuteAsync(TaskItem taskItem,
+    public override async Task<Result> ExecuteAsync(TaskItem taskItem,
         ImageWatermarkArguments? argments,
         Action<double> progressCallback,
         CancellationToken cancellationToken = default)
@@ -87,7 +88,7 @@ public class ImageWatermarkTaskHandler(IImageWatermarker imageWatermarker, ICove
 
         await _imageWatermarker.WatermarkAsync(options);
 
-        return true;
+        return Result.Success();
     }
 
 

@@ -1,5 +1,5 @@
 
-## GitHub
+# GitHub
 
 ```bash
 git push -u github master
