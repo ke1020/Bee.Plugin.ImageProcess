@@ -7,7 +7,7 @@
   x:Class="Bee.Plugin.ImageProcess.Views.ImageConvertView">
   <StackPanel>
     <!-- 输入格式选择 -->
-    <TextBlock Margin="0 5" Text="{i18n:Localize 'Bee.Plugin.ImageProcess.InputFormat'}" />
+    <TextBlock Classes="MT-1" Text="{i18n:Localize 'Bee.Plugin.ImageProcess.InputFormat'}" />
     <ItemsControl ItemsSource="{Binding AvailableInputImageFormats}"
       DockPanel.Dock="Bottom">
       <ItemsControl.ItemsPanel>
@@ -27,17 +27,21 @@
     </ItemsControl>
 
     <!-- 输出格式选择 -->
-    <TextBlock Margin="0 5"
+    <TextBlock Classes="MT-1"
       Text="{i18n:Localize 'Bee.Plugin.ImageProcess.OutputFormat'}" />
     <ComboBox SelectedValue="{Binding TaskList.TaskArguments.OutputFormat, Mode=TwoWay}"
-      HorizontalAlignment="Stretch" ItemsSource="{Binding OutputFormats}" Margin="0,0,0,20" />
+      HorizontalAlignment="Stretch" ItemsSource="{Binding OutputFormats}" />
 
     <!--输出质量-->
-    <TextBlock Text="{i18n:Localize 'Bee.Plugin.ImageProcess.OutputQuality', {Binding #slider.Value}}" />
-    <Slider x:Name="slider" Minimum="1" Maximum="100" IsSnapToTickEnabled="True" TickFrequency="1" Value="{Binding TaskList.TaskArguments.Quality, Mode=TwoWay}" />
+    <TextBlock Classes="MT-1"
+      Text="{i18n:Localize 'Bee.Plugin.ImageProcess.OutputQuality', {Binding #slider.Value}}" />
+    <Slider x:Name="slider" Minimum="1" Maximum="100" IsSnapToTickEnabled="True" TickFrequency="1"
+      Value="{Binding TaskList.TaskArguments.Quality, Mode=TwoWay}" />
 
     <!--并发数-->
-    <TextBlock Text="{i18n:Localize 'Task.MaxDegreeOfParallelism.Label', {Binding #MaxDegree.Value}}" />
-    <Slider x:Name="MaxDegree" Minimum="1" Maximum="32" IsSnapToTickEnabled="True" TickFrequency="1" Value="{Binding TaskList.TaskArguments.MaxDegreeOfParallelism, Mode=TwoWay}" />
+    <TextBlock
+      Text="{i18n:Localize 'Task.MaxDegreeOfParallelism.Label', {Binding #MaxDegree.Value}}" />
+    <Slider x:Name="MaxDegree" Minimum="1" Maximum="32" IsSnapToTickEnabled="True" TickFrequency="1"
+      Value="{Binding TaskList.TaskArguments.MaxDegreeOfParallelism, Mode=TwoWay}" />
   </StackPanel>
 </UserControl>

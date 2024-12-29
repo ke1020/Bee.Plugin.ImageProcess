@@ -107,14 +107,14 @@
         Value="{Binding TaskList.TaskArguments.Rotation, Mode=TwoWay}" />
 
       <!--透明度-->
-      <TextBlock Classes="MT-1"
+      <TextBlock
         Text="{i18n:Localize 'Bee.Plugin.ImageProcess.Opacity', {Binding #opacity.Value}}" />
       <Slider x:Name="opacity" Minimum="1" Maximum="100" IsSnapToTickEnabled="True"
         TickFrequency="1"
         Value="{Binding TaskList.TaskArguments.Opacity, Mode=TwoWay}" />
 
       <!--输出质量-->
-      <TextBlock Classes="MT-1"
+      <TextBlock
         Text="{i18n:Localize 'Bee.Plugin.ImageProcess.OutputQuality', {Binding #slider.Value}}" />
       <Slider x:Name="slider" Minimum="1" Maximum="100" IsSnapToTickEnabled="True" TickFrequency="1"
         Value="{Binding TaskList.TaskArguments.Quality, Mode=TwoWay}" />

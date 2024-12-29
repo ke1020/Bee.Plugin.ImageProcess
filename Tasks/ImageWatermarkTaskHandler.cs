@@ -1,6 +1,5 @@
 using Bee.Base.Abstractions;
 using Bee.Base.Abstractions.Tasks;
-using Bee.Base.Models;
 using Bee.Base.Models.Plugin;
 using Bee.Base.Models.Tasks;
 using Bee.Plugin.ImageProcess.Models;
@@ -8,8 +7,6 @@ using Bee.Plugin.ImageProcess.Models;
 using Ke.ImageProcess.Abstractions;
 using Ke.ImageProcess.Models;
 using Ke.ImageProcess.Models.Watermark;
-
-using Microsoft.Extensions.Options;
 
 namespace Bee.Plugin.ImageProcess.Tasks;
 
