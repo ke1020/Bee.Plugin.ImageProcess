@@ -7,7 +7,7 @@ using Bee.Plugin.ImageProcess.Models;
 using Ke.ImageProcess.Abstractions;
 using Ke.ImageProcess.Models.Convert;
 
-using LanguageExt.Common;
+using LanguageExt;
 
 namespace Bee.Plugin.ImageProcess.Tasks;
 
@@ -19,7 +19,7 @@ public class ImageConvertTaskHandler(IImageConverter imageConverter, ICoverHandl
 {
     private readonly IImageConverter _imageConverter = imageConverter;
 
-    public override async Task<Result<bool>> ExecuteAsync(TaskItem taskItem,
+    public override async Task<Fin<Unit>> ExecuteAsync(TaskItem taskItem,
         ImageConvertArguments? argments,
         Action<double> progressCallback,
         CancellationToken cancellationToken = default)
@@ -38,6 +38,6 @@ public class ImageConvertTaskHandler(IImageConverter imageConverter, ICoverHandl
         // 执行转换
         await _imageConverter.ConvertAsync(req, cancellationToken);
 
-        return new Result<bool>(true);
+        return Fin<Unit>.Succ(Unit.Default);
     }
 }
