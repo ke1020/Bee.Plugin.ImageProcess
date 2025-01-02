@@ -1,14 +1,12 @@
 using Bee.Base.Abstractions;
 using Bee.Base.Abstractions.Tasks;
-using Bee.Base.Models;
-using Bee.Base.Models.Plugin;
 using Bee.Base.Models.Tasks;
 using Bee.Plugin.ImageProcess.Models;
 
 using Ke.ImageProcess.Abstractions;
 using Ke.ImageProcess.Models.Scale;
 
-using Microsoft.Extensions.Options;
+using LanguageExt.Common;
 
 namespace Bee.Plugin.ImageProcess.Tasks;
 
@@ -20,7 +18,7 @@ public class ImageScaleTaskHandler(IImageScaler imageScaler, ICoverHandler cover
 {
     private readonly IImageScaler _scaler = imageScaler;
 
-    public override async Task<Result> ExecuteAsync(TaskItem taskItem,
+    public override async Task<Result<bool>> ExecuteAsync(TaskItem taskItem,
         ImageScaleArguments? args,
         Action<double> progressCallback,
         CancellationToken cancellationToken = default)
@@ -40,6 +38,6 @@ public class ImageScaleTaskHandler(IImageScaler imageScaler, ICoverHandler cover
 
         await _scaler.ScaleAsync(request);
 
-        return Result.Success();
+        return new Result<bool>(true);
     }
 }
