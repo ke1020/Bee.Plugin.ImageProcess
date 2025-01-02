@@ -20,12 +20,11 @@ public class ImageConvertTaskHandler(IImageConverter imageConverter, ICoverHandl
     private readonly IImageConverter _imageConverter = imageConverter;
 
     public override async Task<Fin<Unit>> ExecuteAsync(TaskItem taskItem,
-        ImageConvertArguments? argments,
+        ImageConvertArguments argments,
         Action<double> progressCallback,
         CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
-        ArgumentNullException.ThrowIfNull(argments);
 
         // 监听转换完成事件
         _imageConverter.OnConverted += (sender, e) => progressCallback(100);

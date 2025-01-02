@@ -4,7 +4,6 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:i18n="using:Ke.Bee.Localization.Extensions"
   xmlns:ctrl="using:Bee.Base.Controls"
-  xmlns:uc="using:Bee.Plugin.ImageProcess.Views"
   mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
   x:Class="Bee.Plugin.ImageProcess.Views.IndexView">
 

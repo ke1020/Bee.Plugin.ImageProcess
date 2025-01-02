@@ -19,12 +19,11 @@ public class ImageScaleTaskHandler(IImageScaler imageScaler, ICoverHandler cover
     private readonly IImageScaler _scaler = imageScaler;
 
     public override async Task<Fin<Unit>> ExecuteAsync(TaskItem taskItem,
-        ImageScaleArguments? args,
+        ImageScaleArguments args,
         Action<double> progressCallback,
         CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
-        ArgumentNullException.ThrowIfNull(args);
 
         _scaler.OnScaled += (sender, args) => progressCallback(100);
 

@@ -53,12 +53,11 @@ public class ImageWatermarkTaskHandler(IImageWatermarker imageWatermarker, ICove
     };
 
     public override async Task<Fin<Unit>> ExecuteAsync(TaskItem taskItem,
-        ImageWatermarkArguments? argments,
+        ImageWatermarkArguments argments,
         Action<double> progressCallback,
         CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
-        ArgumentNullException.ThrowIfNull(argments);
 
         if (!_watermarkModes.TryGetValue(argments.WatermarkMode, out var callWatermark))
         {
