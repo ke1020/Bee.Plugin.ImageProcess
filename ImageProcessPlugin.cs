@@ -22,7 +22,7 @@ public class ImageProcessPlugin(IServiceProvider serviceProvider) : PluginBase(s
     {
         // 本地化与导航命令
         services.AddTransient<IPlugin, ImageProcessPlugin>();
-        services.AddSingleton<ILocalizaitonResourceContributor, ImageProcessLocalizationResourceContributor>();
+        services.AddSingleton<ILocalizationResourceContributor, ImageProcessLocalizationResourceContributor>();
         services.AddSingleton<INavigationCommand, ImageConvertNavigationCommand>();
 
         // 注入视图
